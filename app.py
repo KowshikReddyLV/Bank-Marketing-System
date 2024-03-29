@@ -4,8 +4,6 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
-import io
-import base64
 
 # Load the trained XGBoost model
 xg = joblib.load("xgboost.pkl")
@@ -114,63 +112,62 @@ def main():
             else:
                 st.error("Customer is unlikely to subscribe to a term deposit.")
 
+            # Display visualizations
+            st.markdown("---")
+            st.subheader("Data Visualizations")
+            
+            # Distribution plot of age
+            st.write("Distribution of Age")
+            fig_age, ax_age = plt.subplots()
+            sns.histplot(df['age'], ax=ax_age)
+            st.pyplot(fig_age, clear_figure=True)
+            st.markdown("---")
+
+            # Distribution plot of balance
+            st.write("Distribution of Balance")
+            fig_balance, ax_balance = plt.subplots()
+            sns.histplot(df['balance'], ax=ax_balance)
+            st.pyplot(fig_balance, clear_figure=True)
+            st.markdown("---")
+
+            # Count plot for job category
+            st.write("Count of Job Categories")
+            fig_job, ax_job = plt.subplots()
+            sns.countplot(x='job', data=df, ax=ax_job)
+            st.pyplot(fig_job, clear_figure=True)
+            st.markdown("---")
+
+
+            # Distribution plot of duration
+            st.write("Distribution of Duration")
+            fig_duration, ax_duration = plt.subplots()
+            sns.histplot(df['duration'], ax=ax_duration)
+            st.pyplot(fig_duration, clear_figure=True)
+            st.markdown("---")
+
+            # Count plot for marital data
+            st.write("Count of Marital Status")
+            fig_marital, ax_marital = plt.subplots(figsize=(10, 6))
+            sns.countplot(x=df['marital'], ax=ax_marital)
+            st.pyplot(fig_marital, clear_figure=True)
+            st.markdown("---")
+
+            # Plot for campaign category
+            st.write("Distribution of Campaign")
+            fig_campaign, ax_campaign = plt.subplots(figsize=(15, 6))
+            sns.histplot(df['campaign'], kde=False, ax=ax_campaign)
+            st.pyplot(fig_campaign, clear_figure=True)
+            st.markdown("---")
+
+            # Plot for target variable
+            st.write("Count of Subscription")
+            fig_subscription, ax_subscription = plt.subplots(figsize=(10, 5))
+            sns.countplot(x=df['deposit'], ax=ax_subscription)
+            st.pyplot(fig_subscription, clear_figure=True)
+
         # Display a message if prediction has not been made yet
         if not prediction_made:
             st.write("Click the 'Predict' button to see the prediction.")
-
-        st.markdown("---")
-
-    # Display visualizations regardless of prediction made or not
-    st.subheader("Data Visualizations")
-    
-    # Distribution plot of age
-    st.write("Distribution of Age")
-    fig_age, ax_age = plt.subplots()
-    sns.histplot(df['age'], ax=ax_age)
-    st.pyplot(fig_age, clear_figure=True)
-    st.markdown("---")
-
-    # Distribution plot of balance
-    st.write("Distribution of Balance")
-    fig_balance, ax_balance = plt.subplots()
-    sns.histplot(df['balance'], ax=ax_balance)
-    st.pyplot(fig_balance, clear_figure=True)
-    st.markdown("---")
-
-    # Count plot for job category
-    st.write("Count of Job Categories")
-    fig_job, ax_job = plt.subplots()
-    sns.countplot(x='job', data=df, ax=ax_job)
-    st.pyplot(fig_job, clear_figure=True)
-    st.markdown("---")
-
-
-    # Distribution plot of duration
-    st.write("Distribution of Duration")
-    fig_duration, ax_duration = plt.subplots()
-    sns.histplot(df['duration'], ax=ax_duration)
-    st.pyplot(fig_duration, clear_figure=True)
-    st.markdown("---")
-
-    # Count plot for marital data
-    st.write("Count of Marital Status")
-    fig_marital, ax_marital = plt.subplots(figsize=(10, 6))
-    sns.countplot(x=df['marital'], ax=ax_marital)
-    st.pyplot(fig_marital, clear_figure=True)
-    st.markdown("---")
-
-    # Plot for campaign category
-    st.write("Distribution of Campaign")
-    fig_campaign, ax_campaign = plt.subplots(figsize=(15, 6))
-    sns.histplot(df['campaign'], kde=False, ax=ax_campaign)
-    st.pyplot(fig_campaign, clear_figure=True)
-    st.markdown("---")
-
-    # Plot for target variable
-    st.write("Count of Subscription")
-    fig_subscription, ax_subscription = plt.subplots(figsize=(10, 5))
-    sns.countplot(x=df['deposit'], ax=ax_subscription)
-    st.pyplot(fig_subscription, clear_figure=True)
 
 if __name__ == "__main__":
     main()
